@@ -53,18 +53,17 @@ int main(){
 		cin >> x >> y >> d;
 		x--;y--;
 		adj[x].push_back(make_pair(y,d));
-		adj[y].push_back(make_pair(x,d));
 	}
+	int s,e;
+	cin >> s >> e;--s,--e;
 	vector<long long int> dl(n,INF);
 	vector<int> p(n,-1);
-	dijkstra(0,dl,p);
-	for(int i =0;i<n;i++){
-		// cout << p[i] << endl;
-	}
-	vector<int> path = restore(0,n-1,p);
+	dijkstra(s,dl,p);
+	vector<int> path = restore(s,e,p);
 	// cout << n << endl;
-	for(int i =0;i<path.size();i++){
-		cout << path[i] + 1 << " ";
+	if(dl[e]==INF) cout << -1 << endl;
+	else{
+		cout << dl[e] << endl;
 	}
-	cout << endl;
+	// cout << endl;
 }
