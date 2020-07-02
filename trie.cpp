@@ -1,67 +1,64 @@
-class TrieNode{
-    public:
-    TrieNode* children[26];
+#include<bits/stdc++.h>
+using namespace std;
+
+
+struct TrieNode{
+    int idx;
     bool isEnd;
-    
+    TrieNode* children[26];
+
     TrieNode(){
         for(int i =0;i<26;i++)
-            children[i]=NULL;
+            children[i] = NULL;
         isEnd = false;
     }
 };
 
-TrieNode* makeNode(){
-    TrieNode *res = new TrieNode();
+
+int no_vertx=0;
+TrieNode* make_node(){
+    TrieNode* res = new TrieNode();
     for(int i =0;i<26;i++)
-            res->children[i]=NULL;
-        
-    res->isEnd =false;
+        res->children[i] = NULL;
+    res->isEnd= false;
     return res;
 }
-class Trie {
-public:
-    /** Initialize your data structure here. */
-    TrieNode* root;
-    
-    Trie() {
-        root = makeNode();
-    }
-    
-    /** Inserts a word into the trie. */
-    void insert(string word) {
-        TrieNode* curr = root;
-        for(int i =0;i<word.length();i++){
-            int check = word[i]-'a';
-            if(!curr->children[check])
-                curr->children[check] = makeNode(); 
-            curr = curr->children[check];
+
+TrieNode* root = new TrieNode();
+int main(){
+    int n;
+    cin >> n;
+    root->idx  = 0;
+    string pats[n];
+    for(int i =0;i<n;i++)
+        cin >> pats[i];
+
+    for(int i =0;i<n;i++){
+        TrieNode* cur= root;
+        for(int j = 0;j<pats[i].length();j++){
+            if(cur->children[pats[i][j]-'A']==NULL){
+                cur->children[pats[i][j]-'A'] = new TrieNode();
+                cur = cur->children[pats[i][j]-'A'];
+                cur->idx = ++no_vertx;
+            }
+            else
+                cur = cur->children[pats[i][j]-'A'];
+
         }
-        curr->isEnd = true;
+        cur->isEnd = true;
     }
-    
-    /** Returns if the word is in the trie. */
-    bool search(string word) {
-        TrieNode* curr = root;
-        for(int i =0;i<word.length();i++){
-            int check = word[i]-'a';
-            // cout << char(check+'a') << endl;
-            if(!curr->children[check])
-                return false;
-            curr = curr->children[check];
+
+    function<void(TrieNode*)> dfs = [&](TrieNode* u){
+        if(u->isEnd)
+            return;
+
+        for(int i =0;i<26;i++)
+        {   
+            if(u->children[i]!=NULL){
+                dfs(u->children[i]);
+                cout << u->idx << "->" << u->children[i]->idx << ":" << char('A' + i) << endl;
+            }
         }
-        if(curr->isEnd&&curr!=NULL)return true;
-        return false;
-    }
-    
-    /** Returns if there is any word in the trie that starts with the given prefix. */
-    bool startsWith(string prefix) {
-        TrieNode* curr = root;
-        for(int i =0;i<prefix.length();i++){
-            int check = prefix[i]-'a';
-            if(!curr->children[check])
-                return false;
-            curr = curr->children[check];
-        }
-        return curr!=NULL;
-    }
-};
+    };
+    dfs(root);
+}
