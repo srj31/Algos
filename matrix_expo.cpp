@@ -2,6 +2,18 @@
 #include<bits/stdc++.h>
 using namespace std;
 const int M = 1e9 + 7;
+
+struct Matrix{
+    double a[2][2] = {{0,0},{0,0}};
+
+    Matrix operator *(const &Matrix other){
+        Matrix product;
+
+
+        return product;
+    }
+};
+
 void matmult(long long  a[][2],long long  b[][2],long long c[][2],long long  M)//multiply matrix a and b. put result in c
 {
     int i,j,k;

@@ -1,5 +1,8 @@
 
 vector<int> par;
+// works for trees using dfs
+
+//for graohs need to use bfs 
 pair<int,int> dfs(int u,int p =-1,int d=0){
 	pair<int,int> res = make_pair(d,u);
 	for(auto child:adj[u]){

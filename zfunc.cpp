@@ -13,5 +13,5 @@ vector<int> z_func(string s){
 			 l=i;r=i+z[i]-1;
 		}
 	}
-	return f;
+	return z;
 }
